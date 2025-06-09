@@ -1,6 +1,6 @@
 {
     'name': 'Sales Access Control',
-    'version': '17.0.1.0.0',
+    'version': '17.0.2.0.0',
     'category': 'Sales',
     'summary': 'Enhanced access control for sales orders based on teams and management hierarchy',
     'description': """
@@ -28,7 +28,7 @@ Technical Details:
 * Optimized for performance with proper indexing
 * Includes migration and demo data
     """,
-    'author': 'Adham',
+    'author': 'Adham Mohamed',
     'license': 'MIT',
     'depends': [
         'base',

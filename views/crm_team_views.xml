@@ -8,15 +8,6 @@
             <field name="model">crm.team</field>
             <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
             <field name="arch" type="xml">
-
-                <!-- Add team members field -->
-                <field name="user_id" position="after">
-                    <field name="member_ids" widget="many2many_tags"
-                           options="{'no_create': True, 'no_create_edit': True}"
-                           context="{'default_share': False}"
-                           domain="[('share', '=', False)]"/>
-                </field>
-
                 <!-- Add statistics -->
                 <div class="oe_button_box" position="inside">
                     <button name="action_view_team_members"
@@ -55,18 +46,17 @@
                                 <field name="sales_order_count" readonly="1"/>
                             </group>
                         </group>
-                        <group string="Team Members Details">
-                            <field name="member_ids" nolabel="1">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="login"/>
-                                    <field name="email"/>
-                                    <field name="is_country_manager"/>
-                                    <field name="primary_sales_orders_count"/>
-                                    <field name="accessible_sales_orders_count"/>
-                                </tree>
-                            </field>
-                        </group>
+                        <separator string="Team Members Details"/>
+                        <field name="member_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="login"/>
+                                <field name="email"/>
+                                <field name="is_country_manager"/>
+                                <field name="primary_sales_orders_count"/>
+                                <field name="accessible_sales_orders_count"/>
+                            </tree>
+                        </field>
                     </page>
                 </notebook>
 

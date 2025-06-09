@@ -30,6 +30,7 @@ class ResUsers(models.Model):
         'crm.team',
         string='Member of Sales Teams',
         compute='_compute_sales_team_memberships',
+        store=False,  # Don't store, always compute fresh
         help='Sales teams this user is a member of'
     )
 
@@ -88,11 +89,27 @@ class ResUsers(models.Model):
             user.managing_country_manager_ids = manager_records.mapped('manager_id')
 
     def _compute_sales_team_memberships(self):
+        """Compute which sales teams this user is a member of"""
         for user in self:
-            teams = self.env['crm.team'].search([
-                ('member_ids', 'in', user.id)
-            ])
-            user.sales_team_member_ids = teams
+            try:
+                # Check if the field exists in crm.team model
+                if 'member_ids' in self.env['crm.team']._fields:
+                    teams = self.env['crm.team'].search([
+                        ('member_ids', 'in', user.id)
+                    ])
+                    user.sales_team_member_ids = teams.ids
+                else:
+                    # Fallback: check team leadership
+                    teams = self.env['crm.team'].search([
+                        ('user_id', '=', user.id)
+                    ])
+                    user.sales_team_member_ids = teams.ids
+            except Exception as e:
+                # Log the error and set empty list
+                import logging
+                _logger = logging.getLogger(__name__)
+                _logger.warning(f"Error computing team memberships for user {user.id}: {e}")
+                user.sales_team_member_ids = []
 
     def _compute_sales_orders_count(self):
         for user in self:
