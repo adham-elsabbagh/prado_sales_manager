@@ -74,7 +74,7 @@
         <menuitem id="menu_sales_teams_config"
                   name="Sales Teams"
                   parent="menu_sales_access_config"
-                  action="sales_team.action_crm_tag_tree_team"
+                  action="sales_team.crm_team_action_config"
                   groups="sales_team.group_sale_manager"
                   sequence="20"/>
 

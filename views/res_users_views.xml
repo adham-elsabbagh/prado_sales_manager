@@ -18,7 +18,7 @@
                                     type="object"
                                     class="oe_stat_button"
                                     icon="fa-file-text-o"
-                                    attrs="{'invisible': [('accessible_sales_orders_count', '=', 0)]}">
+                                    invisible="accessible_sales_orders_count == 0">
                                 <div class="o_field_widget o_stat_info">
                                     <span class="o_stat_value">
                                         <field name="accessible_sales_orders_count"/>
@@ -30,7 +30,7 @@
                                     type="object"
                                     class="oe_stat_button"
                                     icon="fa-users"
-                                    attrs="{'invisible': [('is_country_manager', '=', False)]}">
+                                    invisible="not is_country_manager">
                                 <div class="o_field_widget o_stat_info">
                                     <span class="o_stat_value">
                                         <field name="managed_salespeople_ids" widget="statinfo"/>
@@ -63,10 +63,10 @@
                         </group>
 
                         <group string="Management Hierarchy"
-                               attrs="{'invisible': [('is_country_manager', '=', False), ('managing_country_manager_ids', '=', [])]}">
+                               invisible="not is_country_manager and managing_country_manager_ids">
 
                             <group string="Managed Salespeople"
-                                   attrs="{'invisible': [('is_country_manager', '=', False)]}">
+                                   invisible="not is_country_manager">
                                 <field name="managed_salespeople_ids" readonly="1" nolabel="1">
                                     <tree>
                                         <field name="name"/>
@@ -78,7 +78,7 @@
                             </group>
 
                             <group string="Country Managers"
-                                   attrs="{'invisible': [('managing_country_manager_ids', '=', [])]}">
+                                      invisible="not managing_country_manager_ids">
                                 <field name="managing_country_manager_ids" readonly="1" nolabel="1">
                                     <tree>
                                         <field name="name"/>

@@ -48,7 +48,6 @@ class ResUsers(models.Model):
         compute='_compute_sales_orders_count'
     )
 
-    @api.depends('sales_country_manager_ids')
     def _compute_is_country_manager(self):
         for user in self:
             user.is_country_manager = bool(
@@ -68,7 +67,6 @@ class ResUsers(models.Model):
         else:
             return [('id', 'not in', manager_ids)]
 
-    @api.depends('sales_country_manager_ids.salespeople_ids')
     def _compute_managed_salespeople(self):
         for user in self:
             manager_record = self.env['sales.country.manager'].search([

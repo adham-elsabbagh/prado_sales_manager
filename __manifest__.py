@@ -38,15 +38,11 @@ Technical Details:
     'data': [
         'security/sales_access_security.xml',
         'security/ir.model.access.csv',
-        'data/sales_access_demo.xml',
         'views/sale_order_views.xml',
         'views/crm_team_views.xml',
         'views/sales_country_manager_views.xml',
         'views/res_users_views.xml',
         'views/sales_access_menus.xml',
-    ],
-    'demo': [
-        'demo/sales_access_demo.xml',
     ],
     'installable': True,
     'auto_install': False,

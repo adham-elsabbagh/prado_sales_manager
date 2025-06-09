@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 
 class SalesCountryManager(models.Model):
     _name = 'sales.country.manager'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Sales Country Manager'
     _rec_name = 'manager_id'
     _order = 'manager_id'

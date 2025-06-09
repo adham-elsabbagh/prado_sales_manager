@@ -108,8 +108,8 @@ This module extends Odoo's sales access control system to provide more flexible 
 
 1. **Download the module**:
    ```bash
-   # Copy the sales_access_control folder to your addons directory
-   cp -r sales_access_control /path/to/odoo/addons/
+   # Copy the prado_sales_manager folder to your addons directory
+   cp -r prado_sales_manager /path/to/odoo/addons/
    ```
 
 2. **Update apps list**:
