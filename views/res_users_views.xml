@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Users Form View Extension -->
+        <record id="view_users_form_inherit_sales_access" model="ir.ui.view">
+            <field name="name">res.users.form.inherit.sales.access</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add sales access information in a new tab -->
+                <notebook position="inside">
+                    <page string="Sales Access" groups="sales_team.group_sale_manager">
+
+                        <div class="oe_button_box">
+                            <button name="action_view_accessible_sales_orders"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-file-text-o"
+                                    attrs="{'invisible': [('accessible_sales_orders_count', '=', 0)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="accessible_sales_orders_count"/>
+                                    </span>
+                                    <span class="o_stat_text">Accessible Orders</span>
+                                </div>
+                            </button>
+                            <button name="action_view_managed_salespeople"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-users"
+                                    attrs="{'invisible': [('is_country_manager', '=', False)]}">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="managed_salespeople_ids" widget="statinfo"/>
+                                    </span>
+                                    <span class="o_stat_text">Managed Salespeople</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <group>
+                            <group string="Sales Role">
+                                <field name="is_country_manager" readonly="1"/>
+                            </group>
+                            <group string="Sales Statistics">
+                                <field name="primary_sales_orders_count" readonly="1"/>
+                                <field name="secondary_sales_orders_count" readonly="1"/>
+                                <field name="accessible_sales_orders_count" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Team Memberships">
+                            <field name="sales_team_member_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="user_id"/>
+                                    <field name="member_count"/>
+                                    <field name="sales_order_count"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group string="Management Hierarchy"
+                               attrs="{'invisible': [('is_country_manager', '=', False), ('managing_country_manager_ids', '=', [])]}">
+
+                            <group string="Managed Salespeople"
+                                   attrs="{'invisible': [('is_country_manager', '=', False)]}">
+                                <field name="managed_salespeople_ids" readonly="1" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="login"/>
+                                        <field name="primary_sales_orders_count"/>
+                                        <field name="accessible_sales_orders_count"/>
+                                    </tree>
+                                </field>
+                            </group>
+
+                            <group string="Country Managers"
+                                   attrs="{'invisible': [('managing_country_manager_ids', '=', [])]}">
+                                <field name="managing_country_manager_ids" readonly="1" nolabel="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="login"/>
+                                    </tree>
+                                </field>
+                            </group>
+
+                        </group>
+
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+        <!-- Users Tree View Extension -->
+        <record id="view_users_tree_inherit_sales_access" model="ir.ui.view">
+            <field name="name">res.users.tree.inherit.sales.access</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+
+                <field name="login" position="after">
+                    <field name="is_country_manager" optional="hide"/>
+                    <field name="accessible_sales_orders_count" optional="hide"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

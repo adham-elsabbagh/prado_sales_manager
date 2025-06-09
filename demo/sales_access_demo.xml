@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo Users -->
+        <record id="user_country_manager_europe" model="res.users">
+            <field name="name">John Smith</field>
+            <field name="login">country.manager.europe</field>
+            <field name="email">john.smith@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_access_control.group_sales_country_manager'), ref('sales_team.group_sale_salesman')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="user_salesperson_uk" model="res.users">
+            <field name="name">Alice Johnson</field>
+            <field name="login">salesperson.uk</field>
+            <field name="email">alice.johnson@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_salesman')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="user_salesperson_france" model="res.users">
+            <field name="name">Pierre Dubois</field>
+            <field name="login">salesperson.france</field>
+            <field name="email">pierre.dubois@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_salesman')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="user_salesperson_germany" model="res.users">
+            <field name="name">Hans Mueller</field>
+            <field name="login">salesperson.germany</field>
+            <field name="email">hans.mueller@example.com</field>
+            <field name="groups_id" eval="[(6, 0, [ref('sales_team.group_sale_salesman')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Demo Sales Teams -->
+        <record id="team_uk" model="crm.team">
+            <field name="name">UK Sales Team</field>
+            <field name="user_id" ref="user_salesperson_uk"/>
+            <field name="member_ids" eval="[(6, 0, [ref('user_salesperson_uk')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="team_france" model="crm.team">
+            <field name="name">France Sales Team</field>
+            <field name="user_id" ref="user_salesperson_france"/>
+            <field name="member_ids" eval="[(6, 0, [ref('user_salesperson_france')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="team_germany" model="crm.team">
+            <field name="name">Germany Sales Team</field>
+            <field name="user_id" ref="user_salesperson_germany"/>
+            <field name="member_ids" eval="[(6, 0, [ref('user_salesperson_germany'), ref('user_salesperson_france')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Demo Country Manager -->
+        <record id="country_manager_europe" model="sales.country.manager">
+            <field name="manager_id" ref="user_country_manager_europe"/>
+            <field name="salespeople_ids" eval="[(6, 0, [ref('user_salesperson_uk'), ref('user_salesperson_france'), ref('user_salesperson_germany')])]"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <!-- Demo Customers -->
+        <record id="customer_uk_company" model="res.partner">
+            <field name="name">British Manufacturing Ltd</field>
+            <field name="is_company">1</field>
+            <field name="email">contact@britishmanufacturing.co.uk</field>
+            <field name="country_id" ref="base.uk"/>
+        </record>
+
+        <record id="customer_france_company" model="res.partner">
+            <field name="name">Société Française SARL</field>
+            <field name="is_company">1</field>
+            <field name="email">contact@societefrancaise.fr</field>
+            <field name="country_id" ref="base.fr"/>
+        </record>
+
+        <record id="customer_germany_company" model="res.partner">
+            <field name="name">Deutsche Industrie GmbH</field>
+            <field name="is_company">1</field>
+            <field name="email">kontakt@deutscheindustrie.de</field>
+            <field name="country_id" ref="base.de"/>
+        </record>
+
+        <!-- Demo Sales Orders -->
+        <record id="sale_order_uk_1" model="sale.order">
+            <field name="name">SO001</field>
+            <field name="partner_id" ref="customer_uk_company"/>
+            <field name="user_id" ref="user_salesperson_uk"/>
+            <field name="team_id" ref="team_uk"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="sale_order_france_1" model="sale.order">
+            <field name="name">SO002</field>
+            <field name="partner_id" ref="customer_france_company"/>
+            <field name="user_id" ref="user_salesperson_france"/>
+            <field name="secondary_salesperson_id" ref="user_salesperson_germany"/>
+            <field name="team_id" ref="team_france"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="sale_order_germany_1" model="sale.order">
+            <field name="name">SO003</field>
+            <field name="partner_id" ref="customer_germany_company"/>
+            <field name="user_id" ref="user_salesperson_germany"/>
+            <field name="team_id" ref="team_germany"/>
+            <field name="state">sale</field>
+        </record>
+
+        <!-- Cross-team order for testing -->
+        <record id="sale_order_cross_team" model="sale.order">
+            <field name="name">SO004</field>
+            <field name="partner_id" ref="customer_uk_company"/>
+            <field name="user_id" ref="user_salesperson_france"/>
+            <field name="secondary_salesperson_id" ref="user_salesperson_uk"/>
+            <field name="team_id" ref="team_germany"/>
+            <field name="state">draft</field>
+        </record>
+
+    </data>
+</odoo>
