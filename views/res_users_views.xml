@@ -18,7 +18,7 @@
                                     type="object"
                                     class="oe_stat_button"
                                     icon="fa-file-text-o"
-                                    attrs="{'invisible': [('accessible_sales_orders_count', '=', 0)]}">
+                                    invisible="not accessible_sales_orders_count">
                                 <div class="o_field_widget o_stat_info">
                                     <span class="o_stat_value">
                                         <field name="accessible_sales_orders_count"/>
@@ -30,12 +30,11 @@
                                     type="object"
                                     class="oe_stat_button"
                                     icon="fa-users"
-                                    attrs="{'invisible': [('is_country_manager', '=', False)]}">
+                                    invisible="not is_country_manager">
                                 <div class="o_field_widget o_stat_info">
                                     <span class="o_stat_value">
                                         <field name="managed_salespeople_ids" widget="statinfo"/>
                                     </span>
-                                    <span class="o_stat_text">Managed Salespeople</span>
                                 </div>
                             </button>
                         </div>
@@ -51,43 +50,43 @@
                             </group>
                         </group>
 
-                        <group string="Team Memberships">
-                            <field name="sales_team_member_ids" readonly="1" nolabel="1">
+                        <separator string="Team Memberships"/>
+                        <field name="sales_team_member_ids" readonly="1" nolabel="1" colspan="2">
+                            <tree>
+                                <field name="name"/>
+                                <field name="user_id"/>
+                                <field name="member_count"/>
+                                <field name="sales_order_count"/>
+                            </tree>
+                        </field>
+
+                        <separator string="Management Hierarchy"
+                                   invisible="not is_country_manager and not managing_country_manager_ids"/>
+
+                        <div invisible="not is_country_manager">
+                            <separator string="Managed Salespeople"/>
+                            <field name="managed_salespeople_ids" readonly="1" nolabel="1">
                                 <tree>
                                     <field name="name"/>
-                                    <field name="user_id"/>
-                                    <field name="member_count"/>
-                                    <field name="sales_order_count"/>
+                                    <field name="login"/>
+                                    <field name="email"/>
+                                    <field name="primary_sales_orders_count"/>
+                                    <field name="secondary_sales_orders_count"/>
+                                    <field name="accessible_sales_orders_count"/>
                                 </tree>
                             </field>
-                        </group>
+                        </div>
 
-                        <group string="Management Hierarchy"
-                               attrs="{'invisible': [('is_country_manager', '=', False), ('managing_country_manager_ids', '=', [])]}">
-
-                            <group string="Managed Salespeople"
-                                   attrs="{'invisible': [('is_country_manager', '=', False)]}">
-                                <field name="managed_salespeople_ids" readonly="1" nolabel="1">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="login"/>
-                                        <field name="primary_sales_orders_count"/>
-                                        <field name="accessible_sales_orders_count"/>
-                                    </tree>
-                                </field>
-                            </group>
-
-                            <group string="Country Managers"
-                                   attrs="{'invisible': [('managing_country_manager_ids', '=', [])]}">
-                                <field name="managing_country_manager_ids" readonly="1" nolabel="1">
-                                    <tree>
-                                        <field name="name"/>
-                                        <field name="login"/>
-                                    </tree>
-                                </field>
-                            </group>
-
-                        </group>
+                        <div invisible="not managing_country_manager_ids">
+                            <separator string="My Country Managers"/>
+                            <field name="managing_country_manager_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+                        </div>
 
                     </page>
                 </notebook>

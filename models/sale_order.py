@@ -87,14 +87,14 @@ class SaleOrder(models.Model):
         return domain
 
     @api.model
-    def search(self, domain, offset=0, limit=None, order=None, count=False):
+    def search(self, domain, offset=0, limit=None, order=None):
         """Override search to apply access control"""
         # Only apply custom access control for non-admin users
         if not self.env.user.has_group('base.group_system'):
             access_domain = self._get_user_access_domain(self.env.user.id)
             domain = ['&'] + domain + access_domain
 
-        return super().search(domain, offset=offset, limit=limit, order=order, count=count)
+        return super().search(domain, offset=offset, limit=limit, order=order)
 
     def write(self, vals):
         """Override write to ensure proper access control"""

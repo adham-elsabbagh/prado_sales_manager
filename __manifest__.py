@@ -1,6 +1,6 @@
 {
     'name': 'Sales Access Control',
-    'version': '17.0.1.0.0',
+    'version': '17.0.2.0.0',
     'category': 'Sales',
     'summary': 'Enhanced access control for sales orders based on teams and management hierarchy',
     'description': """
@@ -28,7 +28,7 @@ Technical Details:
 * Optimized for performance with proper indexing
 * Includes migration and demo data
     """,
-    'author': 'Adham',
+    'author': 'Adham Mohamed',
     'license': 'MIT',
     'depends': [
         'base',
@@ -38,15 +38,11 @@ Technical Details:
     'data': [
         'security/sales_access_security.xml',
         'security/ir.model.access.csv',
-        'data/sales_access_demo.xml',
         'views/sale_order_views.xml',
         'views/crm_team_views.xml',
         'views/sales_country_manager_views.xml',
         'views/res_users_views.xml',
         'views/sales_access_menus.xml',
-    ],
-    'demo': [
-        'demo/sales_access_demo.xml',
     ],
     'installable': True,
     'auto_install': False,

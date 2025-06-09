@@ -19,43 +19,7 @@
                 </p>
             </field>
         </record>
-
-        <!-- Enhanced Sales Teams Action -->
-        <record id="action_sales_teams_enhanced" model="ir.actions.act_window">
-            <field name="name">Sales Teams (Enhanced)</field>
-            <field name="res_model">crm.team</field>
-            <field name="view_mode">tree,form,kanban</field>
-            <field name="context">{'search_default_sales_teams': 1}</field>
-            <field name="domain">[('use_opportunities', '=', False)]</field>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Set up your Sales Teams with enhanced access control!
-                </p>
-                <p>
-                    Define team members who can access all orders for their team.
-                    Team members will have visibility to orders beyond just their own.
-                </p>
-            </field>
-        </record>
-
         <!-- Menu Items -->
-
-        <!-- Country Managers Menu under Sales/Configuration -->
-        <menuitem id="menu_sales_country_manager"
-                  name="Country Managers"
-                  parent="sale.sale_menu_root"
-                  action="action_sales_country_manager"
-                  groups="sales_team.group_sale_manager"
-                  sequence="30"/>
-
-        <!-- Enhanced Teams Menu -->
-        <menuitem id="menu_sales_teams_enhanced"
-                  name="Sales Teams (Enhanced)"
-                  parent="sale.sale_menu_root"
-                  action="action_sales_teams_enhanced"
-                  groups="sales_team.group_sale_manager"
-                  sequence="25"/>
-
         <!-- Configuration Menu -->
         <menuitem id="menu_sales_access_config"
                   name="Access Control"
@@ -74,7 +38,7 @@
         <menuitem id="menu_sales_teams_config"
                   name="Sales Teams"
                   parent="menu_sales_access_config"
-                  action="sales_team.action_crm_tag_tree_team"
+                  action="sales_team.crm_team_action_config"
                   groups="sales_team.group_sale_manager"
                   sequence="20"/>
 
