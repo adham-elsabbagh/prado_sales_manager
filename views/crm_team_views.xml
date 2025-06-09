@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- CRM Team Form View Extension -->
+        <record id="crm_team_view_form_inherit_sales_access" model="ir.ui.view">
+            <field name="name">crm.team.form.inherit.sales.access</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add team members field -->
+                <field name="user_id" position="after">
+                    <field name="member_ids" widget="many2many_tags"
+                           options="{'no_create': True, 'no_create_edit': True}"
+                           context="{'default_share': False}"
+                           domain="[('share', '=', False)]"/>
+                </field>
+
+                <!-- Add statistics -->
+                <div class="oe_button_box" position="inside">
+                    <button name="action_view_team_members"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-users">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="member_count"/>
+                            </span>
+                            <span class="o_stat_text">Members</span>
+                        </div>
+                    </button>
+                    <button name="action_view_sales_orders"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-file-text-o">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="sales_order_count"/>
+                            </span>
+                            <span class="o_stat_text">Sales Orders</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Add members information in a tab -->
+                <notebook position="inside">
+                    <page string="Team Members" groups="sales_team.group_sale_manager">
+                        <group>
+                            <group string="Team Leadership">
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                            <group string="Team Statistics">
+                                <field name="member_count" readonly="1"/>
+                                <field name="sales_order_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="Team Members Details">
+                            <field name="member_ids" nolabel="1">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="email"/>
+                                    <field name="is_country_manager"/>
+                                    <field name="primary_sales_orders_count"/>
+                                    <field name="accessible_sales_orders_count"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+        <!-- CRM Team Tree View Extension -->
+        <record id="crm_team_view_tree_inherit_sales_access" model="ir.ui.view">
+            <field name="name">crm.team.tree.inherit.sales.access</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+            <field name="arch" type="xml">
+
+                <field name="user_id" position="after">
+                    <field name="member_count"/>
+                    <field name="sales_order_count"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

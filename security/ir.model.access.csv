@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_country_manager_admin,sales.country.manager admin,model_sales_country_manager,base.group_system,1,1,1,1
+access_sales_country_manager_sales_manager,sales.country.manager sales manager,model_sales_country_manager,sales_team.group_sale_manager,1,1,1,1
+access_sales_country_manager_country_manager,sales.country.manager country manager,model_sales_country_manager,group_sales_country_manager,1,0,0,0
+access_sales_country_manager_salesman,sales.country.manager salesman,model_sales_country_manager,sales_team.group_sale_salesman,1,0,0,0

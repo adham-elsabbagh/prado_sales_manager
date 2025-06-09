@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Sale Order Form View Extension -->
+        <record id="view_order_form_inherit_sales_access" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit.sales.access</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Add secondary salesperson field -->
+                <field name="user_id" position="after">
+                    <field name="secondary_salesperson_id"
+                           options="{'no_create': True, 'no_create_edit': True}"
+                           context="{'default_share': False}"
+                           domain="[('share', '=', False)]"/>
+                </field>
+
+                <!-- Add access information in a separate page -->
+                <notebook position="inside">
+                    <page string="Access Control" groups="sales_team.group_sale_manager,sales_access_control.group_sales_country_manager">
+                        <group>
+                            <group string="Sales Team Access">
+                                <field name="team_id" readonly="1"/>
+                                <field name="team_id.member_ids" readonly="1" widget="many2many_tags"/>
+                            </group>
+                            <group string="Individual Access">
+                                <field name="user_id" readonly="1"/>
+                                <field name="secondary_salesperson_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="All Users with Access">
+                            <field name="accessible_user_ids" readonly="1" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="is_country_manager"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <div class="oe_button_box">
+                            <button name="action_view_accessible_users"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-users">
+                                <div class="o_field_widget o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="accessible_user_ids" widget="statinfo" string="Users"/>
+                                    </span>
+                                    <span class="o_stat_text">with Access</span>
+                                </div>
+                            </button>
+                        </div>
+                    </page>
+                </notebook>
+
+            </field>
+        </record>
+
+        <!-- Sale Order Tree View Extension -->
+        <record id="view_quotation_tree_inherit_sales_access" model="ir.ui.view">
+            <field name="name">sale.order.tree.inherit.sales.access</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+
+                <field name="user_id" position="after">
+                    <field name="secondary_salesperson_id" optional="hide"/>
+                </field>
+
+            </field>
+        </record>
+
+        <!-- Sale Order Search View Extension -->
+        <record id="view_sales_order_filter_inherit_sales_access" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.sales.access</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">
+
+                <!-- Add search filters -->
+                <filter name="my_quotation" position="after">
+                    <separator/>
+                    <filter string="I'm Secondary Salesperson"
+                            name="secondary_salesperson"
+                            domain="[('secondary_salesperson_id','=',uid)]"/>
+                    <filter string="My Team Orders"
+                            name="my_team_orders"
+                            domain="[('team_id.member_ids','in',[uid])]"/>
+                    <separator/>
+                    <filter string="Managed Salespeople Orders"
+                            name="managed_orders"
+                            domain="['|','|',('user_id','in',user.managed_salespeople_ids.ids),('secondary_salesperson_id','in',user.managed_salespeople_ids.ids),('team_id.member_ids','in',user.managed_salespeople_ids.ids)]"
+                            groups="sales_access_control.group_sales_country_manager"/>
+                </filter>
+
+                <!-- Add group by options -->
+                <filter name="salesperson" position="after">
+                    <filter string="Secondary Salesperson"
+                            name="group_secondary_salesperson"
+                            domain="[]"
+                            context="{'group_by':'secondary_salesperson_id'}"/>
+                </filter>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
