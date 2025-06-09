@@ -29,6 +29,7 @@ Technical Details:
 * Includes migration and demo data
     """,
     'author': 'Adham Mohamed',
+    'company': 'Prado',
     'license': 'MIT',
     'depends': [
         'base',

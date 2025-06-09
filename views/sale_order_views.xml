@@ -19,7 +19,7 @@
 
                 <!-- Add access information in a separate page -->
                 <notebook position="inside">
-                    <page string="Access Control" groups="sales_team.group_sale_manager,prado_sales_manager.group_sales_country_manager">
+                    <page string="Access Control" groups="sales_team.group_sale_manager,sales_access_control.group_sales_country_manager">
                         <group>
                             <group string="Sales Team Access">
                                 <field name="team_id" readonly="1"/>
