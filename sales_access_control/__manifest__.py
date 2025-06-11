@@ -28,7 +28,7 @@ Technical Details:
 * Optimized for performance with proper indexing
 * Includes migration and demo data
     """,
-    'author': 'Adham Mohamed',
+    'author': 'Adham',
     'license': 'LGPL-3',
     'depends': [
         'base',
