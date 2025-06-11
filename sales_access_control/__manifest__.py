@@ -29,7 +29,7 @@ Technical Details:
 * Includes migration and demo data
     """,
     'author': 'Adham Mohamed',
-    'license': 'MIT',
+    'license': 'LGPL-3',
     'depends': [
         'base',
         'sale',
