@@ -29,7 +29,6 @@ Technical Details:
 * Includes migration and demo data
     """,
     'author': 'Adham Mohamed',
-    'company': 'Prado',
     'license': 'MIT',
     'depends': [
         'base',
@@ -46,6 +45,9 @@ Technical Details:
         'views/sales_access_menus.xml',
     ],
     'installable': True,
+    "web_icon": '/sales_access_control/static/description/icon.svg',
     'auto_install': False,
     'application': False,
+    'price': 9.99,
+    'currency': 'EUR',
 }
