@@ -46,6 +46,7 @@ Technical Details:
     ],
     'installable': True,
     "web_icon": '/sales_access_control/static/description/icon.svg',
+    'images': ['static/description/banner.png'],
     'auto_install': False,
     'application': False,
     'price': 9.99,
