@@ -48,6 +48,4 @@ Technical Details:
     "web_icon": '/sales_access_control/static/description/icon.svg',
     'auto_install': False,
     'application': False,
-    'price': 9.99,
-    'currency': 'EUR',
 }
