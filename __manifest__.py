@@ -48,4 +48,5 @@ Technical Details:
     "web_icon": '/sales_access_control/static/description/icon.svg',
     'auto_install': False,
     'application': False,
+
 }
